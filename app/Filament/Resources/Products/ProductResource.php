@@ -14,6 +14,7 @@ use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class ProductResource extends Resource
@@ -34,9 +35,15 @@ class ProductResource extends Resource
         return ProductInfolist::configure($schema);
     }
 
-    public static function table(Table $table): Table
+     public static function table(Table $table): Table
     {
-        return ProductsTable::configure($table);
+        return $table
+            ->columns([
+                TextColumn::make('name'),
+                TextColumn::make('price')->money('BRL'),
+                TextColumn::make('amount'),
+                TextColumn::make('created_at')->date('d/m/Y H:i:s'),
+            ]);
     }
 
     public static function getRelations(): array
