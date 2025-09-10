@@ -11,6 +11,8 @@ use App\Filament\Resources\Products\Schemas\ProductInfolist;
 use App\Filament\Resources\Products\Tables\ProductsTable;
 use App\Models\Product;
 use BackedEnum;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -27,7 +29,14 @@ class ProductResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return ProductForm::configure($schema);
+        return $schema
+        ->schema([
+            TextInput::make('name')->label('Nome'),
+            Textarea::make('description')->label('Descrição'),
+            TextInput::make('price')->label('Preço'),
+            TextInput::make('amount')->label('Quantidade disponível'),
+            TextInput::make('slug'),
+        ]);
     }
 
     public static function infolist(Schema $schema): Schema
