@@ -30,13 +30,13 @@ class ProductResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema
-        ->schema([
-            TextInput::make('name')->label('Nome'),
-            Textarea::make('description')->label('Descrição'),
-            TextInput::make('price')->label('Preço'),
-            TextInput::make('amount')->label('Quantidade disponível'),
-            TextInput::make('slug'),
-        ]);
+            ->schema([
+                TextInput::make('name')->label('Nome'),
+                Textarea::make('description')->label('Descrição'),
+                TextInput::make('price')->label('Preço'),
+                TextInput::make('amount')->label('Quantidade disponível'),
+                TextInput::make('slug'),
+            ]);
     }
 
     public static function infolist(Schema $schema): Schema
@@ -44,12 +44,15 @@ class ProductResource extends Resource
         return ProductInfolist::configure($schema);
     }
 
-     public static function table(Table $table): Table
+    public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('name'),
-                TextColumn::make('price')->money('BRL'),
+                TextInput::make('price')
+                    ->label('Preço')
+                    ->money('BRL') // <-- A mágica acontece aqui
+                    ->required(), // É uma boa prática adicionar a validação,
                 TextColumn::make('amount'),
                 TextColumn::make('created_at')->date('d/m/Y H:i:s'),
             ]);
