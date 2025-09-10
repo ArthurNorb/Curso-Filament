@@ -18,6 +18,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use illuminate\Support\Str;
 
 class ProductResource extends Resource
 {
@@ -31,11 +32,17 @@ class ProductResource extends Resource
     {
         return $schema
             ->schema([
-                TextInput::make('name')->label('Nome'),
+                TextInput::make('name')
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, $set) {
+                        $state = Str::slug($state);
+                        $set('slug', $state);
+                    })
+                    ->label('Nome'),
                 Textarea::make('description')->label('Descrição'),
                 TextInput::make('price')->label('Preço'),
                 TextInput::make('amount')->label('Quantidade disponível'),
-                TextInput::make('slug'),
+                TextInput::make('slug')->disabled(),
             ]);
     }
 
