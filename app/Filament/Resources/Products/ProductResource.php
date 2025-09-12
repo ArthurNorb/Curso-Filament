@@ -19,6 +19,8 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use illuminate\Support\Str;
+use Filament\Support\RawJs;
+
 
 class ProductResource extends Resource
 {
@@ -40,7 +42,10 @@ class ProductResource extends Resource
                     })
                     ->label('Nome'),
                 Textarea::make('description')->label('Descrição'),
-                TextInput::make('price')->label('Preço'),
+                TextInput::make('price')
+                    ->label('Preço')
+                    ->prefix('R$')
+                    ->required(),
                 TextInput::make('amount')->label('Quantidade disponível'),
                 TextInput::make('slug')->disabled(),
             ]);
@@ -55,13 +60,14 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('name')->sortable(),
                 TextColumn::make('price')
-                    ->label('Preço')
+                    ->sortable()
                     ->money('BRL'),
                 TextColumn::make('amount'),
                 TextColumn::make('created_at')->date('d/m/Y H:i:s'),
-            ]);
+            ])
+            ->defaultSort('amount', 'deac');
     }
 
     public static function getRelations(): array

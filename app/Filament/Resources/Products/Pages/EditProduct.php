@@ -19,13 +19,4 @@ class EditProduct extends EditRecord
         ];
     }
 
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        $price = $data['price'];
-        $price = str_replace('.', '', $price);
-        $price = str_replace(',', '.', $price);
-        $data['price'] = (float) $price;
-
-        return $data;
-    }
 }
