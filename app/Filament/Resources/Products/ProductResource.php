@@ -56,10 +56,9 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name'),
-                TextInput::make('price')
+                TextColumn::make('price')
                     ->label('Preço')
-                    ->money('BRL') // <-- A mágica acontece aqui
-                    ->required(), // É uma boa prática adicionar a validação,
+                    ->money('BRL'),
                 TextColumn::make('amount'),
                 TextColumn::make('created_at')->date('d/m/Y H:i:s'),
             ]);
